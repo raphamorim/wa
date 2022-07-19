@@ -2,7 +2,8 @@
 name = "wa"
 version = "0.1.0"
 authors = ["Raphael Amorim <rapha850@gmail.com>"]
-edition = "2021"
+description = "WebAssembly Rust Kit"
+license = "MPL-2.0"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
