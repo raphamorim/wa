@@ -1,6 +1,6 @@
 [package]
 name = "wa"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Raphael Amorim <rapha850@gmail.com>"]
 description = "WebAssembly and Rust utility library"
 license = "MPL-2.0"
@@ -13,7 +13,6 @@ rust-version = "1.64.0"
 include = ["src", "examples", "README.md"]
 
 [features]
-# desktop = ["dep:gl", "dep:glutin", "dep:libc"]
 array = []
 vector = []
 string = []

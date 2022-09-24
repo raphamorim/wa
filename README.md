@@ -34,7 +34,9 @@ Wa makes Rust easier by taking the hassle out of working with arrays, numbers, o
 - `vector` (Examples: `cargo run --example vectors`)
 - `array` (Examples: `cargo run --example arrays`)
 
-### String `#[cfg(feature = "string")]`
+### String
+
+`#[cfg(feature = "string")]`
 
 #### template
 
@@ -80,7 +82,7 @@ Note: All special characters will be removed and only valid letters remained.
 
 To replace extended ASCII codes to standards, e.g: "ã" to "a". Check `wa::string::replace_extended_ascii`.
 
-# Example
+Example
 
 ```rust
 use wa::string::camel_case;
