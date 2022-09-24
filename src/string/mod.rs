@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 mod utils;
 
 /// (String) replace extended ASCII codes to standards.
@@ -44,6 +46,48 @@ fn test_replace_extended_ascii() {
         replace_extended_ascii("Rio de Janeiro".to_string()),
         "Rio de Janeiro"
     );
+}
+
+/// (String) Creates a compiled template function that can interpolate data properties in "interpolate" delimiters
+///
+/// # Example
+///
+/// ```rust
+/// use std::collections::HashMap;
+/// use wa::string::template;
+///
+/// let url_template = template("https://api.com/{ user_id }/products/{ product_id }".to_string());
+/// let url: String = url_template(HashMap::from([
+///     ("user_id", "85"),
+///    ("product_id", "23"),
+/// ]));
+///
+/// assert_eq!(url, "https://api.com/85/products/23"); // true
+/// ```
+///
+
+fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> String {
+    let mut ct = template_string.to_string();
+    for (key, value) in &config {
+        let k = format!("{{ {} }}", key);
+        ct = ct.replace(&k, value);
+        println!("{:?} {:?}", k, value);
+    }
+    ct
+}
+
+#[no_mangle]
+pub fn template(s: String) -> impl Fn(HashMap<&str, &str>) -> String {
+    let compile_template_fn = move |param: HashMap<&str, &str>| compile_template(&s, param);
+    compile_template_fn
+}
+
+#[test]
+fn test_template() {
+    let url_template = template("https://api.com/{ user_id }/products/{ product_id }".to_string());
+    let url: String = url_template(HashMap::from([("user_id", "85"), ("product_id", "23")]));
+
+    assert_eq!(url, "https://api.com/85/products/23");
 }
 
 /// (String) Converts the input string into Camel-Case format.
