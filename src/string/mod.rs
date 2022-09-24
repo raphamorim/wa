@@ -66,6 +66,12 @@ fn test_replace_extended_ascii() {
 /// ```
 ///
 
+#[no_mangle]
+pub fn template(s: String) -> impl Fn(HashMap<&str, &str>) -> String {
+    let compile_template_fn = move |param: HashMap<&str, &str>| compile_template(&s, param);
+    compile_template_fn
+}
+
 fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> String {
     let mut ct = template_string.to_string();
     for (key, value) in &config {
@@ -74,12 +80,6 @@ fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> Strin
         println!("{:?} {:?}", k, value);
     }
     ct
-}
-
-#[no_mangle]
-pub fn template(s: String) -> impl Fn(HashMap<&str, &str>) -> String {
-    let compile_template_fn = move |param: HashMap<&str, &str>| compile_template(&s, param);
-    compile_template_fn
 }
 
 #[test]
