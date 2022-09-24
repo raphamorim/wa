@@ -33,6 +33,7 @@ Wa makes Rust easier by taking the hassle out of working with arrays, numbers, o
 - `string` (Examples: `cargo run --example strings`)
 - `vector` (Examples: `cargo run --example vectors`)
 - `array` (Examples: `cargo run --example arrays`)
+- `wasm` (Examples: `cargo run --example webassembly`)
 
 ### String
 

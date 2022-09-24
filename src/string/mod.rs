@@ -50,6 +50,8 @@ fn test_replace_extended_ascii() {
 
 /// (String) Creates a compiled template function that can interpolate data properties in "interpolate" delimiters
 ///
+/// Note: Is necessary spaces between configs.
+///
 /// # Example
 ///
 /// ```rust
@@ -59,10 +61,9 @@ fn test_replace_extended_ascii() {
 /// let url_template = template("https://api.com/{ user_id }/products/{ product_id }".to_string());
 /// let url: String = url_template(HashMap::from([
 ///     ("user_id", "85"),
-///    ("product_id", "23"),
+///     ("product_id", "23"),
 /// ]));
 ///
-/// assert_eq!(url, "https://api.com/85/products/23"); // true
 /// ```
 ///
 
@@ -84,9 +85,16 @@ fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> Strin
 #[test]
 fn test_template() {
     let url_template = template("https://api.com/{ user_id }/products/{ product_id }".to_string());
+
     let url: String = url_template(HashMap::from([("user_id", "85"), ("product_id", "23")]));
+    let url_2: String = url_template(HashMap::from([("user_id", "23"), ("product_id", "85")]));
 
     assert_eq!(url, "https://api.com/85/products/23");
+    assert_eq!(url_2, "https://api.com/23/products/85");
+
+    // let url_template_with_default_value = template("https://api.com/{ user_id || 200 }/products/{ product_id || 100 }".to_string());
+
+    // assert_eq!(url, "https://api.com/200/products/100");
 }
 
 /// (String) Converts the input string into Camel-Case format.
@@ -151,51 +159,6 @@ fn test_camel_case() {
         "rioDeJaneiro"
     );
     assert_eq!(camel_case("Rio2DE2janeiro".to_string()), "rio2de2janeiro");
-}
-
-/// (String) Checks if string ends with the given target string.
-///
-/// Note: If position is not provided, it will search through the whole string by default.
-///
-/// # Example
-///
-/// ```rust
-/// use wa::string::ends_with;
-///
-/// let is_ends_with = ends_with("abc".to_string(), "c".to_string(), None);
-/// // => true
-///
-/// let is_ends_with = ends_with("abc".to_string(), "b".to_string(), None);
-/// // => false
-///
-/// let is_ends_with = ends_with("abc".to_string(), "bc".to_string(), Some(2));
-/// // => false
-/// ```
-///
-
-#[inline]
-#[no_mangle]
-pub fn ends_with(s: String, target: String, position: Option<i32>) -> bool {
-    let pos: usize = position.unwrap_or(0) as usize;
-
-    if pos > 0 {
-        let sliced = &s[0..pos];
-        sliced.ends_with(target.as_str())
-    } else {
-        s.ends_with(target.as_str())
-    }
-}
-
-#[test]
-fn test_chunk() {
-    let is_ends_with = ends_with("abc".to_string(), "c".to_string(), None);
-    assert!(is_ends_with, "{}", true);
-
-    // let is_ends_with_2 = ends_with("abc".to_string(), "b".to_string(), None);
-    // assert!(is_ends_with_2, "{}", false);
-
-    // let is_ends_with_3 = ends_with("abc".to_string(), "bc".to_string(), Some(2));
-    // assert!(is_ends_with_3, "{}", false);
 }
 
 /// (String) Converts the input string into Kebab-Case format.
