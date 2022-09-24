@@ -9,6 +9,9 @@ keywords = ["vector", "utility", "array", "string", "str"]
 categories = ["data-structures", "text-processing"]
 documentation = "https://docs.rs/wa"
 
+rust-version = "1.64.0"
+include = ["src", "examples", "README.md"]
+
 [features]
 # desktop = ["dep:gl", "dep:glutin", "dep:libc"]
 array = []
@@ -19,9 +22,8 @@ string = []
 # Tell `rustc` to optimize for small code size.
 # opt-level = "s"
 
-[dev-dependencies]
-ou = "0.1.5"
-
 [[example]]
-name = "camel_case"
-path = "examples/camel_case.rs"
+# cargo run --example strings --features="string"
+name = "strings"
+path = "examples/strings.rs"
+required-features = ["string"]

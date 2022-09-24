@@ -7,9 +7,9 @@
 // #[test]
 // fn test_chunk() {
 //     let a = chunk(vec!['a', 'b', 'c', 'd'], 2); // => [['a', 'b'], ['c', 'd']]
- 
+
 //     let b = chunk(vec!['a', 'b', 'c', 'd'], 3); // => [['a', 'b', 'c'], ['d']]
-    
+
 //     assert_eq!(a, vec![vec!['a', 'b'], vec!['c', 'd']]);
 //     assert_eq!(b, vec![vec!['a', 'b', 'c'], vec!['d']]);
 // }
