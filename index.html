@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WA</title>
+</head>
+<body>
+	<script>
+    fetch('./string.wasm')
+      .then(response => response.arrayBuffer())
+      .then(bytes => WebAssembly.compile(bytes))
+      .then(mod => WebAssembly.instantiate(mod))
+      .then(({exports: { camel_case }}) => {
+        console.log(camel_case("Rio de Janeiro")); // rioDeJaneiro
+      });
+    </script>
+</body>
+</html>
