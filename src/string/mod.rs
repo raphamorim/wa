@@ -77,7 +77,6 @@ fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> Strin
     for (key, value) in &config {
         let k = format!("{{ {} }}", key);
         ct = ct.replace(&k, value);
-        println!("{:?} {:?}", k, value);
     }
     ct
 }
