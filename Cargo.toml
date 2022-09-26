@@ -1,6 +1,6 @@
 [package]
 name = "wa"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Raphael Amorim <rapha850@gmail.com>"]
 description = "WebAssembly and Rust utility library"
 license = "MPL-2.0"
@@ -10,7 +10,6 @@ categories = ["data-structures", "text-processing"]
 documentation = "https://docs.rs/wa"
 
 rust-version = "1.64.0"
-include = ["src", "examples", "README.md"]
 
 [features]
 array = []

@@ -102,8 +102,9 @@ fn test_template() {
 /// use wa::string::template_vec;
 ///
 /// let url_template = template_vec("https://api.com/{1}/products/{2}?by={1}".to_string());
-/// let url: String = url_template(vec!["85", "23"]); // "https://api.com/85/products/23?by=85"
 ///
+/// let url: String = url_template(vec!["85", "23"]); // "https://api.com/85/products/23?by=85"
+/// let url_2: String = url_template(vec!["23", "85"]); // "https://api.com/23/products/85?by=23"
 /// ```
 ///
 

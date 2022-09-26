@@ -40,6 +40,21 @@ Wa makes Rust easier by taking the hassle out of working with arrays, numbers, o
 
 `#[cfg(feature = "string")]`
 
+#### template_vec
+
+(String) Creates a compiled template function that can interpolate data properties in "interpolate" delimiters using vector
+
+Example
+
+```rust
+use wa::string::template_vec;
+
+let url_template = template_vec("https://api.com/{1}/products/{2}?by={1}".to_string());
+
+let url: String = url_template(vec!["85", "23"]); // "https://api.com/85/products/23?by=85"
+let url_2: String = url_template(vec!["23", "85"]); // "https://api.com/23/products/85?by=23"
+```
+
 #### template
 
 (String) Creates a compiled template function that can interpolate data properties in "interpolate" delimiters
