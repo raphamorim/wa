@@ -75,6 +75,7 @@ pub fn template(s: String) -> impl Fn(HashMap<&str, &str>) -> String {
 
 fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> String {
     let mut ct = template_string.to_string();
+
     for (key, value) in &config {
         let k = format!("{{ {} }}", key);
         ct = ct.replace(&k, value);
@@ -91,10 +92,49 @@ fn test_template() {
 
     assert_eq!(url, "https://api.com/85/products/23");
     assert_eq!(url_2, "https://api.com/23/products/85");
+}
 
-    // let url_template_with_default_value = template("https://api.com/{ user_id || 200 }/products/{ product_id || 100 }".to_string());
+/// (String) Creates a compiled template function that can interpolate data properties in "interpolate" delimiters using vector
+///
+/// # Example
+///
+/// ```rust
+/// use wa::string::template_vec;
+///
+/// let url_template = template_vec("https://api.com/{1}/products/{2}?by={1}".to_string());
+/// let url: String = url_template(vec!["85", "23"]); // "https://api.com/85/products/23?by=85"
+///
+/// ```
+///
 
-    // assert_eq!(url, "https://api.com/200/products/100");
+#[no_mangle]
+pub fn template_vec(s: String) -> impl Fn(Vec<&str>) -> String {
+    let compile_template_fn = move |param: Vec<&str>| compile_template_vec(&s, param);
+    compile_template_fn
+}
+
+fn compile_template_vec(template_string: &str, config: Vec<&str>) -> String {
+    let mut ct = template_string.to_string();
+
+    for (i, value) in config.iter().enumerate() {
+        let k = format!("{{{}}}", i + 1);
+        ct = ct.replace(&k, value);
+    }
+
+    // If still contais data means 
+    // if ct.contains(")
+    ct
+}
+
+#[test]
+fn test_template_vec() {
+    let url_template = template_vec("https://api.com/{1}/products/{2}?by={1}".to_string());
+
+    let url: String = url_template(vec!["85", "23"]);
+    let url_2: String = url_template(vec!["23", "85"]);
+
+    assert_eq!(url, "https://api.com/85/products/23?by=85");
+    assert_eq!(url_2, "https://api.com/23/products/85?by=23");
 }
 
 /// (String) Converts the input string into Camel-Case format.
