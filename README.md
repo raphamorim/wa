@@ -130,20 +130,3 @@ kebab_case("Rio de Janeiro".to_string()); // "foo-bar"
 kebab_case("--rio--1--".to_string()); // "foo-bar"
 kebab_case("__rIO_-de-Jan_eiro_".to_string()); // "f-oo-ba-r"
 ```
-
-#### ends_with
-
-(String) Checks if string ends with the given target string.
-Note: If position is not provided, it will search through the whole string by default.
-
-Example:
-
-```rust
-use wa::string::ends_with;
-let is_ends_with = ends_with("abc".to_string(), "c".to_string(), None);
-// true
-let is_ends_with = ends_with("abc".to_string(), "b".to_string(), None);
-// false
-let is_ends_with = ends_with("abc".to_string(), "bc".to_string(), Some(2));
-// false
-```

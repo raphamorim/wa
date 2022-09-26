@@ -121,9 +121,6 @@ fn compile_template_vec(template_string: &str, config: Vec<&str>) -> String {
         let k = format!("{{{}}}", i + 1);
         ct = ct.replace(&k, value);
     }
-
-    // If still contais data means 
-    // if ct.contains(")
     ct
 }
 
