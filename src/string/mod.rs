@@ -69,8 +69,7 @@ fn test_replace_extended_ascii() {
 
 #[no_mangle]
 pub fn template(s: String) -> impl Fn(HashMap<&str, &str>) -> String {
-    let compile_template_fn = move |param: HashMap<&str, &str>| compile_template(&s, param);
-    compile_template_fn
+    move |param: HashMap<&str, &str>| compile_template(&s, param)
 }
 
 fn compile_template(template_string: &str, config: HashMap<&str, &str>) -> String {
@@ -110,8 +109,7 @@ fn test_template() {
 
 #[no_mangle]
 pub fn template_vec(s: String) -> impl Fn(Vec<&str>) -> String {
-    let compile_template_fn = move |param: Vec<&str>| compile_template_vec(&s, param);
-    compile_template_fn
+    move |param: Vec<&str>| compile_template_vec(&s, param)
 }
 
 fn compile_template_vec(template_string: &str, config: Vec<&str>) -> String {
@@ -171,7 +169,7 @@ pub fn camel_case(s: String) -> String {
             continue;
         }
 
-        if is_special && cc.len() > 0 {
+        if is_special && !cc.is_empty() {
             cc.push(character.to_ascii_uppercase());
         } else {
             cc.push(character.to_ascii_lowercase());
@@ -229,12 +227,12 @@ pub fn kebab_case(s: String) -> String {
     for (_, char) in s.chars().enumerate() {
         if char.is_alphanumeric() {
             if is_last_special_char {
-                if kb.len() > 0 {
+                if !kb.is_empty() {
                     kb.push('-');
                 }
 
                 is_last_special_char = false;
-            } else if is_last_small_char && char.is_uppercase() && kb.len() > 0 {
+            } else if is_last_small_char && char.is_uppercase() && !kb.is_empty() {
                 kb.push('-');
             }
 
